@@ -64,7 +64,7 @@ class Collection implements JsonSerializable, ArrayAccess, Iterator, Countable
 
     public function valid():bool
     {
-        return $this->offsetExists($this->current());
+        return null !== key($this->collection);
     }
 
     public function rewind():void

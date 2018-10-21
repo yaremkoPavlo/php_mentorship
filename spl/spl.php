@@ -16,8 +16,8 @@ echo $a(), PHP_EOL;
 
 echo json_encode($a, JSON_FORCE_OBJECT), PHP_EOL;
 
-foreach ($a as $k => $v) {
-    echo $v;
+foreach ($a as $key => $val) {
+    echo $val, PHP_EOL;
 }
 
 echo count($a), PHP_EOL;
