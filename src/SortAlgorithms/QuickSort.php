@@ -2,10 +2,14 @@
 
 namespace App\SortAlgorithms;
 
-class QuickSort
+class QuickSort implements ArraySortInterface
 {
-    public function __construct()
+    use SortTrait;
+
+    public function sort(array $arr): array
     {
+        self::$itterations = 0;
+        return $this->quickSort($arr);
     }
 
     /**
@@ -13,35 +17,44 @@ class QuickSort
      * 
      * @return array
      */
-    public function quickSort(array $arr): array
+    private function quickSort(array $arr): array
     {
-        $n = count($arr);
+        $arrCount = count($arr);
 
-        if ($n > 2)
+        if ($arrCount < 2) {
             return $arr;
+        }
 
+        // drop all array keys
         $arr = array_values($arr);
-        $mid = (int) floor($n / 2);
-        $midEl = $arr[$mid];
+
+        $middleIndex = (int) floor($arrCount / 2);
+        $middleElement = $arr[$middleIndex];
         $rightArray = [];
         $leftArray = [];
 
-        for ($i = 0; $i < $n; $i++) {
-            if ($i === $mid) {
+        for ($i = 0; $i < $arrCount; $i++) {
+            if ($i === $middleIndex) {
                 continue;
             }
-            if ($arr[$i] < $midEl) {
+            if ($arr[$i] < $middleElement) {
                 $leftArray[] = $arr[$i];
             } else {
                 $rightArray[] = $arr[$i];
             }
+
+            self::$itterations += 1;
         };
 
-        if (!empty($leftArray))
+        if (!empty($leftArray)) {
             $leftArray = $this->quickSort($leftArray);
-        if (!empty($rightArray))
+        }
+        if (!empty($rightArray)) {
             $rightArray = $this->quickSort($rightArray);
+        }
 
-        return array_merge($leftArray, [$midEl], $rightArray);
+        self::$itterations += 1;
+
+        return array_merge($leftArray, [$middleElement], $rightArray);
     }
 }

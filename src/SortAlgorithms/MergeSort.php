@@ -4,27 +4,23 @@ namespace App\SortAlgorithms;
 
 class MergeSort
 {
-    public function __construct()
-    {
-    }
-
     /**
-     * @param array $arr
+     * @param array $array
      * 
      * @return array
      */
     public function mergeSort(array $arr): array
     {
-        $n = count($arr);
+        $arrCount = count($arr);
 
-        if ($n < 2)
+        if ($arrCount < 2)
             return $arr;
 
         $arr = array_values($arr);
-        $mid = floor($n / 2);
+        $middleIndex = floor($arrCount / 2);
 
-        $leftArray = array_slice($arr, 0, $mid);
-        $rightArray = array_slice($arr, $mid);
+        $leftArray = array_slice($arr, 0, $middleIndex);
+        $rightArray = array_slice($arr, $middleIndex);
 
         $leftArray = $this->mergeSort($leftArray);
         $rightArray = $this->mergeSort($rightArray);
@@ -40,36 +36,36 @@ class MergeSort
      */
     private function merge(array $leftArray, array $rightArray): array
     {
-        $arr = [];
-        $ni = count($leftArray);
-        $nj = count($rightArray);
-        // keyholder for leftArray
-        $i = 0;
-        // keyholder for rightArray
-        $j = 0;
-        // keyholder for resultArray
-        $k = 0;
-        while ($i < $ni && $j < $nj) {
-            if ($leftArray[$i] < $rightArray[$j]) {
-                $arr[$k] = $leftArray[$i];
-                $i++;
+        $result = [];
+        $leftArrayCount = count($leftArray);
+        $rightArrayCount = count($rightArray);
+        // index holder for $leftArray
+        $iLeft = 0;
+        // index holder for $rightArray
+        $iRight = 0;
+        // index holder for $result
+        $iResult = 0;
+        while ($iLeft < $leftArrayCount && $iRight < $rightArrayCount) {
+            if ($leftArray[$iLeft] < $rightArray[$iRight]) {
+                $result[$iResult] = $leftArray[$iLeft];
+                $iLeft++;
             } else {
-                $arr[$k] = $rightArray[$j];
-                $j++;
+                $result[$iResult] = $rightArray[$iRight];
+                $iRight++;
             }
-            $k++;
+            $iResult++;
         }
-        while ($i < $ni) {
-            $arr[$k] = $leftArray[$i];
-            $i++;
-            $k++;
+        while ($iLeft < $leftArrayCount) {
+            $result[$iResult] = $leftArray[$iLeft];
+            $iLeft++;
+            $iResult++;
         }
-        while ($j < $nj) {
-            $arr[$k] = $rightArray[$j];
-            $j++;
-            $k++;
+        while ($iRight < $rightArrayCount) {
+            $result[$iResult] = $rightArray[$iRight];
+            $iRight++;
+            $iResult++;
         }
 
-        return $arr;
+        return $result;
     }
 }
