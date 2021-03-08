@@ -4,9 +4,8 @@ ini_set('display_errors', 1);
 require 'vendor/autoload.php';
 
 try {
-    $formView = new \App\TextAnalyzer\FormView('default_form.html.php');
-    $formProcessor = new \App\TextAnalyzer\FormProcessor();
-    $formProcessor->processForm($formView);
+    $form = new \App\TextAnalyzer\Form('default_form.html.php');
+    $form->processForm();
 } catch (Throwable $exception) {
     error_log($exception->getMessage());
 }
