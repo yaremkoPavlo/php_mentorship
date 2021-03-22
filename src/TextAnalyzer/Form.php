@@ -43,28 +43,6 @@ class Form
         $this->applyDefaultOptions();
     }
 
-    /**
-     * @param string $form
-     * @param array|null $options
-     */
-    public function render(string $form = '', ?array $options = null): void
-    {
-        if (isset($options)) {
-            $this->validateOptions($options);
-        }
-
-        $options = $options ?? $this->options;
-
-        if (strlen($form) > 0 && $this->validateForm($form)) {
-
-            require_once $form;
-
-            return;
-        }
-
-        require_once $this->form;
-    }
-
     public function processForm(): void
     {
         $method = strstr(strtolower($this->options['method']), 'get') ? $_GET : $_POST;
@@ -76,7 +54,7 @@ class Form
             $this->setOutput($result);
         }
 
-        $this->render($this->form);
+        $this->render();
     }
 
     /**
@@ -99,6 +77,8 @@ class Form
         if ($this->validateOptions($options)) {
             $this->options = $options;
         }
+
+        $this->applyDefaultOptions();
     }
 
     /**
@@ -107,6 +87,11 @@ class Form
     public function getOptions(): array
     {
         return $this->options;
+    }
+
+    protected function render(): void
+    {
+        require_once $this->form;
     }
 
     protected function applyDefaultOptions(): void
@@ -207,6 +192,7 @@ EOT;
      */
     protected function validateOptions(array $options = []): bool
     {
+        // Allow empty options, case exist method applyDefaultOptions()
         if (empty($options)) {
             return true;
         }
