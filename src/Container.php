@@ -1,11 +1,15 @@
 <?php
 
+namespace App;
+
+use \Exception;
+
 class Container
 {
     /**
      * @var array<string,mixed>
      */
-    private static $container;
+    private static $container = [];
 
     /**
      * @param string $name
