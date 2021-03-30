@@ -8,7 +8,8 @@
     ],
     "require": {
         "php": "^7.3",
-        "ext-mbstring": "*"
+        "ext-mbstring": "*",
+        "doctrine/orm": "^2.8"
     },
     "autoload": {
         "psr-4": {
